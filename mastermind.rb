@@ -16,15 +16,9 @@ class Game
     end
   end 
   
-  def display_guess_board
+  def display_board(board_array)
     puts "  1 " + " " + " 2 " + " " + " 3 " + " " + " 4 "
-    puts "|" + " #{@guess_array[0]} " + "|" + " #{@guess_array[1]} " + "|" + " #{@guess_array[2]} " + "|" + " #{@guess_array[3]} " + "|"
-    puts 
-  end
-  
-  def display_solution
-    puts "  1 " + " " + " 2 " + " " + " 3 " + " " + " 4 "
-    puts "|" + " #{@solution[0]} " + "|" + " #{@solution[1]} " + "|" + " #{@solution[2]} " + "|" + " #{@solution[3]} " + "|"
+    puts "|" + " #{board_array[0]} " + "|" + " #{board_array[1]} " + "|" + " #{board_array[2]} " + "|" + " #{board_array[3]} " + "|"
     puts 
   end
   
@@ -50,24 +44,19 @@ class Game
     end
   puts "#{check.length} colours correct"  
   end  
-  
+
   def check_correct_positions
     @correct_positions = 0 
-      if (@solution[0] == @guess_array[0])
+    @array_position = 0 
+    until @array_position == 4 
+      if (@solution[@array_position] == @guess_array[@array_position])
         @correct_positions += 1
-      end   
-      if (@solution[1] == @guess_array[1])
-        @correct_positions += 1
-      end   
-      if (@solution[2] == @guess_array[2])
-        @correct_positions += 1
-      end   
-      if (@solution[3] == @guess_array[3])
-        @correct_positions += 1
-      end
+      end 
+      @array_position += 1 
+    end 
     puts "#{@correct_positions} in the correct position."
-  end 
-  
+  end
+
   def result
     if @guess_array == @solution
       puts "Well done. The correct answer was:" 
@@ -84,7 +73,7 @@ class Game
       until (@counter == 12) || (@guess_array == @solution)
         selections_left > 1? noun = "attempts" : noun = "attempt"
         puts "You have #{selections_left} #{noun} left"
-        display_guess_board
+        display_board(@guess_array)
         make_guess
         check_common_values
         check_correct_positions
@@ -92,7 +81,7 @@ class Game
         selections_left -= 1
       end
       result
-      display_solution
+      display_board(@solution)
   end 
   
 end 
