@@ -1,11 +1,12 @@
 class Game 
   
-  attr_reader :solution_array
+  attr_reader :solution_array, :guess_array
   
   def initialize
-    @guess_array = ["-", "-", "-", "-"]
     @solution_array = []
+    @guess_array = ["-", "-", "-", "-"]
     @setter = Setter.new
+    @guesser = Guesser.new
   end
   
   def display_board(board_array)
@@ -13,22 +14,6 @@ class Game
     puts "|" + " #{board_array[0]} " + "|" + " #{board_array[1]} " + "|" + " #{board_array[2]} " + "|" + " #{board_array[3]} " + "|"
     puts 
   end
-  
-  def make_guess 
-    selections_made = 0 
-    position_number = 0 
-    until selections_made == 4
-      print "#{position_number + 1}: "
-      user_input = gets.chomp.upcase
-      if (user_input.length == 1) && (user_input =~ /[WPYGRB]/)
-        @guess_array[position_number] = user_input
-        position_number += 1
-        selections_made += 1 
-      else 
-        puts "Invalid entry. Please try again."
-      end
-    end  
-  end        
 
   def check_common_values
     check = @solution_array.select do |x|
@@ -70,7 +55,7 @@ class Game
         selections_left > 1? noun = "attempts" : noun = "attempt"
         puts "You have #{selections_left} #{noun} left"
         display_board(@guess_array)
-        make_guess
+        @guess_array = @guesser.make_guess
         check_common_values
         check_correct_positions
         counter += 1 
@@ -94,8 +79,32 @@ class Setter
     4.times { @solution_array << colours[rand(colours.length)] }
     @solution_array
   end 
-  
 end
+
+class Guesser
+  attr_reader :guess_array
+  
+  def initialize
+    @guess_array = ["-", "-", "-", "-"]
+  end
+  
+  def make_guess 
+    selections_made = 0 
+    position_number = 0 
+    until selections_made == 4
+      print "#{position_number + 1}: "
+      user_input = gets.chomp.upcase
+      if (user_input.length == 1) && (user_input =~ /[WPYGRB]/)
+        @guess_array[position_number] = user_input
+        position_number += 1
+        selections_made += 1 
+      else 
+        puts "Invalid entry. Please try again."
+      end
+    end  
+    @guess_array
+  end  
+end       
   
 game = Game.new
 game.play_game
