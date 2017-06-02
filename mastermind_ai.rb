@@ -5,7 +5,7 @@ class Game
   def initialize
     @guess_array = ["-", "-", "-", "-"]
     @solution_array = []
-    @computer = Computer.new
+    @setter = Setter.new
   end
   
   def display_board(board_array)
@@ -61,7 +61,7 @@ class Game
     
   def play_game 
     selections_left = 12
-    @solution_array = @computer.generate_solution
+    @solution_array = @setter.generate_solution
     display_board(@solution_array)
     counter = 0 
     puts "Please enter your colours one at a time."
@@ -82,7 +82,7 @@ class Game
   
 end 
   
-class Computer 
+class Setter 
   attr_reader :solution_array
   
   def initialize
