@@ -151,6 +151,7 @@ class HumanGuesser < Guesser
 end    
 
 class ComputerGuesser < Guesser
+  
   def make_guess 
     colours = ["W", "P", "Y", "G", "R", "B"]
     @guess_array = []
@@ -167,6 +168,25 @@ game.play_game
 
 
 =begin
+
+Basic AI code
+
+class ComputerGuesser < Guesser
+  def make_guess
+    kept_colours = []
+    solution_array = @setter.solution_array
+    4.times { @guess_array << colours[rand(colours.length)] }
+    puts "guess array = #{@guess_array}"
+    solution_array.each { |x| kept_colours << x if @guess_array.include?(x) }
+    @guess_array = kept_colours
+    puts "kept_colours = #{kept_colours}"
+    until @guess_array.length == 4
+      @guess_array << colours[rand(colours.length)]
+    end 
+    puts @guess_array
+    end
+end
+
 First draft of setter, guesser and board classes
 
 class Board
@@ -182,7 +202,6 @@ class Board
     puts 
   end
 end
-
 class Setter 
   attr_reader :solution_array
   
@@ -208,7 +227,6 @@ class Guesser
     4.times { @guess_array << colours[rand(colours.length)] }
   end 
 end   
-
 setter = Setter.new
 guesser = Guesser.new 
 setter.generate_solution
