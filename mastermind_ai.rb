@@ -96,6 +96,11 @@ class Setter
 end
 
 class ComputerSetter < Setter
+
+  def initialize
+   super
+  end
+
   def generate_solution
     colours = ["W", "P", "Y", "G", "R", "B"]
     4.times { @solution_array << colours[rand(colours.length)] }
@@ -104,6 +109,10 @@ class ComputerSetter < Setter
 end
 
 class HumanSetter < Setter
+  def initialize
+   super
+  end
+  
   def generate_solution 
     selections_made = 0 
     position_number = 0 
@@ -132,6 +141,11 @@ class Guesser
 end
 
 class HumanGuesser < Guesser  
+  
+  def initialize
+   super
+  end
+  
   def make_guess 
     selections_made = 0 
     position_number = 0 
@@ -151,7 +165,10 @@ class HumanGuesser < Guesser
 end    
 
 class ComputerGuesser < Guesser
-  
+  def initialize
+   super
+  end
+   
   def make_guess 
     colours = ["W", "P", "Y", "G", "R", "B"]
     @guess_array = []
@@ -168,9 +185,7 @@ game.play_game
 
 
 =begin
-
 Basic AI code
-
 class ComputerGuesser < Guesser
   def make_guess
     kept_colours = []
@@ -186,9 +201,7 @@ class ComputerGuesser < Guesser
     puts @guess_array
     end
 end
-
 First draft of setter, guesser and board classes
-
 class Board
   attr_reader :board_array
   
